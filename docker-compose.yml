@@ -10,6 +10,7 @@
     build:
       context: .
       dockerfile: WalletRU.BackTimeMachine/Dockerfile
+      
   walletru.messagehandler:
     image: walletru.messagehandler
     build:
@@ -21,3 +22,13 @@
     build:
       context: .
       dockerfile: WalletRU.MessageLogger/Dockerfile
+      
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "TeledocDB"
+    ports:
+      - "5432:5432"
