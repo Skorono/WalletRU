@@ -1,0 +1,23 @@
+﻿services:
+  walletru.web:
+    image: walletru.web
+    build:
+      context: .
+      dockerfile: WalletRU.Web/Dockerfile
+
+  walletru.backtimemachine:
+    image: walletru.backtimemachine
+    build:
+      context: .
+      dockerfile: WalletRU.BackTimeMachine/Dockerfile
+  walletru.messagehandler:
+    image: walletru.messagehandler
+    build:
+      context: .
+      dockerfile: WalletRU.MessageHandler/Dockerfile
+
+  walletru.messagelogger:
+    image: walletru.messagelogger
+    build:
+      context: .
+      dockerfile: WalletRU.MessageLogger/Dockerfile

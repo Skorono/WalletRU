@@ -1,0 +1,6 @@
+@WalletRU.MessageHandler_HostAddress = http://localhost:5272
+
+GET {{WalletRU.MessageHandler_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
