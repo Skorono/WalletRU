@@ -29,6 +29,6 @@
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: "TeledocDB"
+      POSTGRES_DB: "WalletRuDB"
     ports:
       - "5432:5432"
