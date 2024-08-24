@@ -13,4 +13,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\WalletRU.DAL\WalletRU.DAL.csproj" />
+    </ItemGroup>
+
 </Project>

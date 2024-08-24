@@ -2,7 +2,9 @@
 
 namespace WalletRU.DAL.Repositories;
 
-public sealed class MessageRepository: IRepository<Message>
+public class MessageRepository: EntityRepository<Message>
 {
-    
+    public MessageRepository(string connectionString) : base(connectionString)
+    {
+    }
 }
