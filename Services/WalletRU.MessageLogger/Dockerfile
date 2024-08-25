@@ -7,7 +7,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WalletRU.MessageLogger/WalletRU.MessageLogger.csproj", "WalletRU.MessageLogger/"]
+COPY ["Services/WalletRU.MessageLogger/WalletRU.MessageLogger.csproj", "WalletRU.MessageLogger/"]
 RUN dotnet restore "WalletRU.MessageLogger/WalletRU.MessageLogger.csproj"
 COPY . .
 WORKDIR "/src/WalletRU.MessageLogger"

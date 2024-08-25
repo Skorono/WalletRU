@@ -7,6 +7,6 @@ public interface IRepository<TEntity>
     public IEnumerable<TEntity> Get();
     public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
     public void Add(TEntity entity);
-    public void Delete(TEntity entity);
+    public void Delete(int id);
     public void Update(TEntity entity);
 }

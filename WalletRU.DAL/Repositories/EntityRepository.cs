@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using Npgsql;
 using WalletRU.DAL.Helpers;
 
 namespace WalletRU.DAL.Repositories;
@@ -7,27 +8,25 @@ namespace WalletRU.DAL.Repositories;
 public abstract class EntityRepository<TEntity>: IRepository<TEntity>
     where TEntity: class
 {
-    private readonly string _connectionString;
+    protected readonly NpgsqlConnection _connection;
 
     public EntityRepository(string connectionString)
     {
-        _connectionString = connectionString;
+        _connection = new NpgsqlConnection(connectionString);
     }
     
     public virtual IEnumerable<TEntity> Get()
     {
-        SqlConnection connection = new SqlConnection(_connectionString);
-        string sqlQuery = $"SELECT * FROM {typeof(TEntity).Name}";
+        string sqlQuery = $"SELECT * FROM {typeof(TEntity).Name}s";
 
-        return DatabaseHelper.ExecuteSqlQuery<TEntity>(sqlQuery, connection);
+        return DatabaseHelper.ExecuteSqlQuery<TEntity>(sqlQuery, _connection);
     }
 
     public virtual TEntity Get(int id)
     {
-        SqlConnection connection = new SqlConnection(_connectionString);
-        string sqlQuery = $"SELECT * FROM {typeof(TEntity).Name} WHERE id = @id";
+        string sqlQuery = $"SELECT * FROM {typeof(TEntity).Name}s WHERE id = @id";
 
-        return DatabaseHelper.ExecuteSqlQuery<TEntity>(sqlQuery, connection, [new SqlParameter("id", id)]).First();
+        return DatabaseHelper.ExecuteSqlQuery<TEntity>(sqlQuery, _connection, [new SqlParameter("id", id)]).First();
     }
 
     public virtual IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
@@ -35,18 +34,7 @@ public abstract class EntityRepository<TEntity>: IRepository<TEntity>
         return Get().Where(predicate);
     }
 
-    public virtual void Add(TEntity entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public virtual void Delete(TEntity entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public virtual void Update(TEntity entity)
-    {
-        throw new NotImplementedException();
-    }
+    public abstract void Delete(int id);
+    public abstract void Update(TEntity entity);
+    public abstract void Add(TEntity entity);
 }

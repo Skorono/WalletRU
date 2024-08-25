@@ -1,8 +1,26 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model WalletRU.DAL.Models.Message
 
-<div class="text-center">
-    <h1 class="display-4">@ViewData["Data"]</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@using (Html.BeginForm("SendMessage", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h2>Отправка сообщения</h2>
+
+    <div class="form-horizontal">
+        <h4>Введите ваше сообщение</h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.MessageBody, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.MessageBody, new { @class = "form-control", @id = "messageBody" })
+                @Html.ValidationMessageFor(model => model.MessageBody, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Отправить" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+}

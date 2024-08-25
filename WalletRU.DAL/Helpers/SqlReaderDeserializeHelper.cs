@@ -1,12 +1,13 @@
 ﻿using System.Data.SqlClient;
 using System.Text.Json;
+using Npgsql;
 
 namespace WalletRU.DAL.Helpers;
 
 //TODO: strange name, i may rename it later...
 public static class SqlReaderDeserializeHelper
 {
-    public static TEntity? Deserialize<TEntity>(this SqlDataReader reader)
+    public static TEntity? Deserialize<TEntity>(this NpgsqlDataReader reader)
     {
         Dictionary<string, object> data = new();
 

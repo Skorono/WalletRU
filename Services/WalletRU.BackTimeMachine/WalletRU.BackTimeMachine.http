@@ -1,6 +1,0 @@
-@WalletRU.BackTimeMachine_HostAddress = http://localhost:5258
-
-GET {{WalletRU.BackTimeMachine_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

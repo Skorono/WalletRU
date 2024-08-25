@@ -9,21 +9,29 @@
 
   walletru.backtimemachine:
     image: walletru.backtimemachine
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     build:
       context: .
-      dockerfile: WalletRU.BackTimeMachine/Dockerfile
+      dockerfile: Services/WalletRU.BackTimeMachine/Dockerfile
+    ports:
+      - "7001:7001"
       
   walletru.messagehandler:
     image: walletru.messagehandler
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     build:
       context: .
-      dockerfile: WalletRU.MessageHandler/Dockerfile
+      dockerfile: Services/WalletRU.MessageHandler/Dockerfile
+    ports:
+      - "7002:7002"
 
   walletru.messagelogger:
     image: walletru.messagelogger
     build:
       context: .
-      dockerfile: WalletRU.MessageLogger/Dockerfile
+      dockerfile: Services/WalletRU.MessageLogger/Dockerfile
       
   db:
     image: postgres:latest

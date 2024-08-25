@@ -13,5 +13,9 @@ public sealed class Message
     public string MessageBody { get; set; } = null!;
 
     [JsonPropertyName("published_at")]
-    public DateTime PublishedAt { get; set; } = DateTime.Now;
+    public DateTime PublishedAt { get; set; } = DateTime.UtcNow;
+    
+    [JsonPropertyName("updated_at")]
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
 }

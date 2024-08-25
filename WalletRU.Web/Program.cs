@@ -1,3 +1,6 @@
+using WalletRU.DAL.Models;
+using WalletRU.DAL.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
