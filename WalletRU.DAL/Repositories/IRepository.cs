@@ -1,7 +1,7 @@
 ﻿namespace WalletRU.DAL.Repositories;
 
 public interface IRepository<TEntity>
-    where TEntity: class
+    where TEntity : class
 {
     public TEntity Get(int id);
     public IEnumerable<TEntity> Get();

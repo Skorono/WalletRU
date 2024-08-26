@@ -1,11 +1,11 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using Npgsql;
 using WalletRU.DAL.Helpers;
 
 namespace WalletRU.DAL.Repositories;
 
-public abstract class EntityRepository<TEntity>: IRepository<TEntity>, IDisposable, IAsyncDisposable where TEntity: class
+public abstract class EntityRepository<TEntity> : IRepository<TEntity>, IDisposable, IAsyncDisposable
+    where TEntity : class
 {
     protected readonly NpgsqlConnection _connection;
 
@@ -13,17 +13,27 @@ public abstract class EntityRepository<TEntity>: IRepository<TEntity>, IDisposab
     {
         _connection = new NpgsqlConnection(connectionString);
     }
-    
+
+    public async ValueTask DisposeAsync()
+    {
+        await _connection.DisposeAsync();
+    }
+
+    public void Dispose()
+    {
+        _connection.Dispose();
+    }
+
     public virtual IEnumerable<TEntity> Get()
     {
-        string sqlQuery = $"SELECT * FROM {typeof(TEntity).Name}s";
+        var sqlQuery = $"SELECT * FROM {typeof(TEntity).Name}s";
 
         return DatabaseHelper.ExecuteSqlQuery<TEntity>(sqlQuery, _connection);
     }
 
     public virtual TEntity Get(int id)
     {
-        string sqlQuery = $"SELECT * FROM {typeof(TEntity).Name}s WHERE id = @id";
+        var sqlQuery = $"SELECT * FROM {typeof(TEntity).Name}s WHERE id = @id";
 
         return DatabaseHelper.ExecuteSqlQuery<TEntity>(sqlQuery, _connection, [new SqlParameter("id", id)]).First();
     }
@@ -36,14 +46,4 @@ public abstract class EntityRepository<TEntity>: IRepository<TEntity>, IDisposab
     public abstract void Delete(int id);
     public abstract void Update(TEntity entity);
     public abstract void Add(TEntity entity);
-
-    public void Dispose()
-    {
-        _connection.Dispose();
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await _connection.DisposeAsync();
-    }
 }

@@ -2,7 +2,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using WalletRU.DAL.Models;
-using WalletRU.DAL.Repositories;
 
 namespace WalletRU.Web.Controllers;
 
@@ -13,7 +12,7 @@ public class HomeController : Controller
 
     public HomeController(ILogger<HomeController> logger)
     {
-        _httpClient = new();
+        _httpClient = new HttpClient();
         _logger = logger;
     }
 
@@ -27,8 +26,9 @@ public class HomeController : Controller
     {
         var json = JsonSerializer.Serialize(message);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        await _httpClient.PostAsync("http://localhost:7002/api/Message/postMessage", content);
-        _logger.LogInformation($"[{message.PublishedAt}] Transferred message to MessageHandler. Message content: \"{message.MessageBody}\"");
+        await _httpClient.PostAsync("http://host.docker.internal:7002/api/Message/postMessage", content);
+        _logger.LogInformation(
+            $"[{message.PublishedAt}] Transferred message to MessageHandler. Message content: \"{message.MessageBody}\"");
 
         return View(nameof(Index));
     }

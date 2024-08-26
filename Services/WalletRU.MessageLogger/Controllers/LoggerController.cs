@@ -6,10 +6,10 @@ namespace WalletRU.MessageLogger.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class LoggerController: ControllerBase
+public class LoggerController : ControllerBase
 {
-    private readonly IWebSocketService _socketService;
     private readonly ILogger<LoggerController> _logger;
+    private readonly IWebSocketService _socketService;
 
     public LoggerController(ILogger<LoggerController> logger, IWebSocketService socketService)
     {
@@ -22,7 +22,7 @@ public class LoggerController: ControllerBase
                 $"\n\tBody: \"{((Message)message).MessageBody}\" " +
                 $"\n\tPublished At {((Message)message).PublishedAt}");
     }
-    
+
     [Route("logMessage")]
     public async Task LogMessage()
     {

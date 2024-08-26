@@ -8,10 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<EntityRepository<Message>, MessageRepository>(provider => 
+builder.Services.AddScoped<EntityRepository<Message>, MessageRepository>(provider =>
     new MessageRepository(builder.Configuration.GetConnectionString("postgresConnection")!));
 
-builder.Services.AddTransient<IWebSocketService, WebSocketService>(provider => 
+builder.Services.AddTransient<IWebSocketService, WebSocketService>(provider =>
     new WebSocketService(new ClientWebSocket()));
 
 builder.Services.AddControllers();

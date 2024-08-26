@@ -13,13 +13,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\WalletRU.DAL\WalletRU.DAL.csproj" />
+        <ProjectReference Include="..\..\WalletRU.DAL\WalletRU.DAL.csproj"/>
     </ItemGroup>
 
 </Project>

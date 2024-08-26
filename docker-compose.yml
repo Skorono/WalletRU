@@ -17,8 +17,8 @@
     depends_on:
       - db
     ports:
-      - "7001:7001"
-      
+      - "7001:8080"
+  
   walletru.messagehandler:
     image: walletru.messagehandler
     environment:
@@ -29,7 +29,7 @@
     depends_on:
       - db
     ports:
-      - "7002:7002"
+      - "7002:8080"
 
   walletru.messagelogger:
     image: walletru.messagelogger
@@ -39,8 +39,8 @@
     depends_on:
       - walletru.messagehandler
     ports:
-      - "7003:7003"
-      
+      - "7003:8080"
+  
   db:
     image: postgres:latest
     restart: always

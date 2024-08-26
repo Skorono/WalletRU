@@ -1,5 +1,4 @@
-﻿using System.Data.SqlClient;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Npgsql;
 
 namespace WalletRU.DAL.Helpers;
@@ -11,10 +10,7 @@ public static class SqlReaderDeserializeHelper
     {
         Dictionary<string, object> data = new();
 
-        for (int i = 0; i < reader.FieldCount; i++)
-        {
-            data.Add(reader.GetName(i), reader[i]);            
-        }
+        for (var i = 0; i < reader.FieldCount; i++) data.Add(reader.GetName(i), reader[i]);
 
         var serializedData = JsonSerializer.Serialize(data);
         return JsonSerializer.Deserialize<TEntity>(serializedData);

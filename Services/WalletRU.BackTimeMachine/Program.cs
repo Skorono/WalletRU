@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<EntityRepository<Message>, MessageRepository>(provider => 
+builder.Services.AddTransient<EntityRepository<Message>, MessageRepository>(provider =>
     new MessageRepository(builder.Configuration.GetConnectionString("postgresConnection")!));
 
 builder.Services.AddCors(options =>

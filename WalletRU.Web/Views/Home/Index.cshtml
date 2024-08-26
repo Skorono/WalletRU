@@ -51,7 +51,7 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.MessageBody, new { @class = "form-control", @id = "messageBody" })
+                        @Html.TextAreaFor(model => model.MessageBody, new { @class = "form-control", id = "messageBody" })
                         @Html.ValidationMessageFor(model => model.MessageBody, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -70,10 +70,9 @@
     const serviceUrl = 'http://localhost:7001/api/BackTimeMachine/getPostedMessages';
 
     function updateMessages() {
-        const now = new Date();
-        const period = new Date(now.getTime() - 10 * 60 * 1000);
+        const period = `2024-08-26T00:10:00`;
 
-        fetch(`${serviceUrl}?period=${period.toISOString()}`)
+        fetch(`${serviceUrl}?period=${period}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.status}`);
