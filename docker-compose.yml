@@ -30,8 +30,10 @@
   walletru.messagelogger:
     image: walletru.messagelogger
     build:
-      context: .
+      context: .messages
       dockerfile: Services/WalletRU.MessageLogger/Dockerfile
+    ports:
+      - "7003:7003"
       
   db:
     image: postgres:latest

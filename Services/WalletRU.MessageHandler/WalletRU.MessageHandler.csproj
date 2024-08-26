@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\WalletRU.Core\WalletRU.Core.csproj" />
       <ProjectReference Include="..\..\WalletRU.DAL\WalletRU.DAL.csproj" />
     </ItemGroup>
 

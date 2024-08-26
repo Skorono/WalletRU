@@ -11,7 +11,7 @@ public class MessageRepository: EntityRepository<Message>
     {
     }
 
-    //TODO: In theory, i can get around this with reflection, but for now there is no need to be so sophisticated.
+    //TODO: In theory, i can get around this with reflection or serialization/deserialization into dict, but for now there is no need to be so sophisticated.
     public override void Add(Message entity)
     {
         string sqlQuery = 

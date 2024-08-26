@@ -1,26 +1,103 @@
 ﻿@model WalletRU.DAL.Models.Message
 
-@using (Html.BeginForm("SendMessage", "Home", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <h2>Отправка сообщения</h2>
+<style>
+    /* Стили для контейнера */
+    .message-container {
+        width: 80%;
+        margin: 40px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .message-container .message {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+    .message-container .message:last-child {
+        border-bottom: none;
+    }
 
-    <div class="form-horizontal">
-        <h4>Введите ваше сообщение</h4>
-        <hr/>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.MessageBody, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.MessageBody, new { @class = "form-control", @id = "messageBody" })
-                @Html.ValidationMessageFor(model => model.MessageBody, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    /* Стили для контейнера формы */
+    .form-container {
+        width: 80%;
+        margin: 40px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Отправить" class="btn btn-default"/>
+    /* Стили для контейнера, содержащего форму и сообщения */
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
+
+<div class="main-container">
+    <div class="message-container"></div>
+
+    <div class="form-container">
+        @using (Html.BeginForm("SendMessage", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <h2>Отправка сообщения</h2>
+
+            <div class="form-horizontal">
+                <hr/>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.MessageBody, new { @class = "form-control", @id = "messageBody" })
+                        @Html.ValidationMessageFor(model => model.MessageBody, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Отправить" class="btn btn-default"/>
+                    </div>
+                </div>
             </div>
-        </div>
+        }
     </div>
-}
+</div>
+
+<script>
+    const serviceUrl = 'http://localhost:7001/api/BackTimeMachine/getPostedMessages';
+
+    function updateMessages() {
+        const now = new Date();
+        const period = new Date(now.getTime() - 10 * 60 * 1000);
+
+        fetch(`${serviceUrl}?period=${period.toISOString()}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const messageContainer = document.querySelector('.message-container');
+                messageContainer.innerHTML = '';
+
+                data.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    messageElement.innerHTML = `
+                        <h3>${new Date(message.published_at).toLocaleTimeString()}</h3>
+                        <p>${message.message_body}</p>
+                    `;
+                    messageContainer.appendChild(messageElement);
+                });
+            })
+            .catch(error => console.error('Ошибка при получении сообщений:', error));
+    }
+
+    updateMessages();
+
+    setInterval(updateMessages, 5000);
+</script>

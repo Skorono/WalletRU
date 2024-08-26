@@ -9,6 +9,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<EntityRepository<Message>, MessageRepository>(provider => 
     new MessageRepository(builder.Configuration.GetConnectionString("postgresConnection")!));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddControllers();
 
@@ -20,6 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.MapControllers();
 app.UseHttpsRedirection();

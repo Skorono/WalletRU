@@ -18,9 +18,9 @@ public class BackTimeMachineController: ControllerBase
     }
 
     [HttpGet("getPostedMessages")]
-    public async Task<IActionResult> GetPostedMessages(TimeOnly period)
+    public async Task<IActionResult> GetPostedMessages(DateTime period)
     {
         return Ok(_repository.Get(m 
-            => (DateTime.Now - m.PublishedAt) <= period.ToTimeSpan()));
+            => (DateTime.Now - m.PublishedAt) <= period.TimeOfDay));
     }
 }
