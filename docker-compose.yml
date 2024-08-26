@@ -14,6 +14,8 @@
     build:
       context: .
       dockerfile: Services/WalletRU.BackTimeMachine/Dockerfile
+    depends_on:
+      - db
     ports:
       - "7001:7001"
       
@@ -24,14 +26,18 @@
     build:
       context: .
       dockerfile: Services/WalletRU.MessageHandler/Dockerfile
+    depends_on:
+      - db
     ports:
       - "7002:7002"
 
   walletru.messagelogger:
     image: walletru.messagelogger
     build:
-      context: .messages
+      context: .
       dockerfile: Services/WalletRU.MessageLogger/Dockerfile
+    depends_on:
+      - walletru.messagehandler
     ports:
       - "7003:7003"
       

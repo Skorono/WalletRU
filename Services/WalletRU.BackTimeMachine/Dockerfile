@@ -9,7 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/WalletRU.BackTimeMachine/WalletRU.BackTimeMachine.csproj", "WalletRU.BackTimeMachine/"]
 RUN dotnet restore "WalletRU.BackTimeMachine/WalletRU.BackTimeMachine.csproj"
-COPY .. .
+COPY . .
 WORKDIR "/src/WalletRU.BackTimeMachine"
 RUN dotnet build "WalletRU.BackTimeMachine.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
